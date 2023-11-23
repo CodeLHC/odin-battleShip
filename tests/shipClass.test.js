@@ -1,4 +1,4 @@
-const { Ship } = require("../src/classes/shipClass");
+const Ship = require("../src/classes/shipClass.js");
 
 describe("tests ship properties", () => {
   const testShip = new Ship(3);

@@ -3,6 +3,7 @@ class Ship {
     this.length = length;
     this.hitTimes = 0;
     this.sunkStatus = false;
+    //this.position to update if statements for ship placement in gameboard?
   }
 
   hit() {
@@ -17,4 +18,4 @@ class Ship {
   }
 }
 
-module.exports = { Ship };
+module.exports = Ship;
