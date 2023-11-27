@@ -206,8 +206,6 @@ describe("receiveAttack function tests", () => {
     testGameboard.receiveAttack("H", "6");
     testGameboard.receiveAttack("H", "7");
     testGameboard.receiveAttack("H", "8");
-
-    console.log(testGameboard.board);
     expect(testGameboard.gameOver).toEqual(true);
   });
 });
