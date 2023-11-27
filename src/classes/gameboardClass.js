@@ -4,6 +4,8 @@ class Gameboard {
   constructor() {
     this.xAxisKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
     this.board = this.createBoard();
+    this.gameOver = false;
+    this.shipsSunk = 0;
   }
 
   createBoard() {
@@ -50,7 +52,25 @@ class Gameboard {
     }
   }
 
-  receiveAttack() {}
+  isGameOver() {
+    if (this.shipsSunk === 5) {
+      this.gameOver = true;
+    }
+  }
+
+  receiveAttack(x, y) {
+    if (this.board[x][y] === "") {
+      {
+        this.board[x][y] = "missed";
+      }
+    } else this.board[x][y].hit();
+
+    if (this.board[x][y].sunkStatus === true) {
+      this.shipsSunk = this.shipsSunk + 1;
+    }
+
+    this.isGameOver();
+  }
 }
 
 module.exports = Gameboard;

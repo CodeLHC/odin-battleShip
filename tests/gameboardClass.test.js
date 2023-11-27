@@ -133,7 +133,6 @@ describe("placeShip function tests", () => {
   test("Gameboards place ships across a y axis", () => {
     const testGameboard = new Gameboard();
     testGameboard.placeShip(2, "A1", "horizontal");
-    // console.log(testGameboard.board);
     const testShip = testGameboard.board["A"]["1"];
     expect(testGameboard.board["A"]["1"]).toEqual(testShip);
     expect(testGameboard.board["A"]["2"]).toEqual(testShip);
@@ -156,7 +155,7 @@ describe("placeShip function tests", () => {
     testGameboard.placeShip(5, "B2", "vertical");
     const testShipOne = testGameboard.board["A"]["1"];
     const testShipTwo = testGameboard.board["B"]["2"];
-    console.log(testGameboard.board);
+
     expect(testGameboard.board["A"]["1"]).toEqual(testShipOne);
     expect(testGameboard.board["A"]["2"]).toEqual(testShipOne);
     expect(testGameboard.board["B"]["2"]).toEqual(testShipTwo);
@@ -164,5 +163,51 @@ describe("placeShip function tests", () => {
     expect(testGameboard.board["D"]["2"]).toEqual(testShipTwo);
     expect(testGameboard.board["E"]["2"]).toEqual(testShipTwo);
     expect(testGameboard.board["F"]["2"]).toEqual(testShipTwo);
+  });
+});
+
+describe("receiveAttack function tests", () => {
+  test("records a missed hit", () => {
+    const testGameboard = new Gameboard();
+    testGameboard.receiveAttack("A", "1");
+    expect(testGameboard.board["A"]["1"]).toEqual("missed");
+  });
+  test("updates hit times on ship instance if a ship is hit", () => {
+    const testGameboard = new Gameboard();
+    testGameboard.placeShip(2, "A1", "horizontal");
+    const testShip = testGameboard.board["A"]["1"];
+    testGameboard.receiveAttack("A", "1");
+    testGameboard.receiveAttack("A", "2");
+    expect(testShip.sunkStatus).toEqual(true);
+  });
+
+  test("gameboard is able to tell if all ships have sunk", () => {
+    const testGameboard = new Gameboard();
+    testGameboard.placeShip(2, "A1", "horizontal");
+    testGameboard.placeShip(5, "B2", "vertical");
+    testGameboard.placeShip(3, "A3", "horizontal");
+    testGameboard.placeShip(4, "H5", "horizontal");
+    testGameboard.placeShip(3, "F4", "horizontal");
+    // const testShipOne = testGameboard.board["A"]["1"];
+    testGameboard.receiveAttack("A", "1");
+    testGameboard.receiveAttack("A", "2");
+    testGameboard.receiveAttack("B", "2");
+    testGameboard.receiveAttack("C", "2");
+    testGameboard.receiveAttack("D", "2");
+    testGameboard.receiveAttack("E", "2");
+    testGameboard.receiveAttack("F", "2");
+    testGameboard.receiveAttack("A", "3");
+    testGameboard.receiveAttack("A", "4");
+    testGameboard.receiveAttack("A", "5");
+    testGameboard.receiveAttack("F", "4");
+    testGameboard.receiveAttack("F", "5");
+    testGameboard.receiveAttack("F", "6");
+    testGameboard.receiveAttack("H", "5");
+    testGameboard.receiveAttack("H", "6");
+    testGameboard.receiveAttack("H", "7");
+    testGameboard.receiveAttack("H", "8");
+
+    console.log(testGameboard.board);
+    expect(testGameboard.gameOver).toEqual(true);
   });
 });
